@@ -429,8 +429,10 @@
           <do_all exact="$buyspaces.count" counter="$sector">
             <set_value name="$excluded" exact="false" />
             <do_all exact="$excludedsectors.count" counter="$check">
-              <do_if value="$excludedsectors.{$check} == $buyspaces.{$sector}">
+              <!-- <debug_to_file name="this.ship.knownname" directory="'TaterTrader'" text="'Excluded Sector: ('+$excludedsectors.{$check}.knownname+'),('+$excludedsectors.{$check}.cluster.knownname+') Table: '+$excludedsectors.{$check}.cluster+' BuySpace Cluster: ('+$buyspaces.{$sector}.knownname+') Table: '+$buyspaces.{$sector}" output="false" append="true" />-->
+              <do_if value="$excludedsectors.{$check}.cluster == $buyspaces.{$sector}">
                 <set_value name="$excluded" exact="true" />
+                <debug_to_file name="this.ship.knownname" directory="'TaterTrader'" text="'Removing '+$buyspaces.{$sector}.knownname+' from BuySpaces'" output="false" append="true" />
               </do_if>
             </do_all>
             <do_if value="not $excluded">
@@ -441,8 +443,9 @@
           <do_all exact="$sellspaces.count" counter="$sector">
             <set_value name="$excluded" exact="false" />
             <do_all exact="$excludedsectors.count" counter="$check">
-              <do_if value="$excludedsectors.{$check} == $sellspaces.{$sector}">
+              <do_if value="$excludedsectors.{$check}.cluster == $sellspaces.{$sector}">
                 <set_value name="$excluded" exact="true" />
+                <debug_to_file name="this.ship.knownname" directory="'TaterTrader'" text="'Removing '+$sellspaces.{$sector}.knownname+' from SellSpaces'" output="false" append="true" />
               </do_if>
             </do_all>
             <do_if value="not $excluded">
