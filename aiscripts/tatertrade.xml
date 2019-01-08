@@ -889,7 +889,6 @@
                     <set_value name="$GrofferBuy" exact="$stationbuyoffer" />
                     <set_value name="$GrofferSell" exact="$bestdeal" />
                     <set_value name="$StationTrade" exact="true" />
-                    <set_value name="$GrofitFound" exact="false" />
 
                     <set_value name="$Gromount" exact="$bestamount" />
                     <set_value name="$itemcostsell" exact="$bestprice" />
@@ -905,6 +904,7 @@
 
         <do_if value="$StationTrade == true">
           <debug_to_file name="this.ship.knownname" directory="'TaterTrader'" text="'Station Trader Trade found!'" output="false" append="true" />
+          <set_value name="$GrofitFound" exact="false" />
           <resume label="setupdeals" />
         </do_if>
 
@@ -923,7 +923,7 @@
       -->
 
       <do_if value="not ($warebasket.count gt 0)">
-        <debug_to_file name="this.ship.knownname" directory="'TaterTrader'" text="'No Wares Detected! Resetting to start! Log File Version: 4 \n \n \n'" output="false" append="true" />
+        <debug_to_file name="this.ship.knownname" directory="'TaterTrader'" text="'\nNo Wares Detected! Resetting to start! Log File Version: 4'" output="false" append="true" />
         <wait exact="100ms" />
         <resume label="start" />
       </do_if>
@@ -1160,7 +1160,9 @@
       </do_all>
 
       <label name="setupdeals" />
-      <!-- Add a check to make sure the trades are still valid at this point -->
+      <do_if value="$GrofitFound == null">
+        <set_value name="$GrofitFound" exact="false" />
+      </do_if>
       <do_if value="$GrofitFound or $StationTrade">
         <set_value name="$spendablemoney" exact="player.money/100" />
         <do_if value="this.ship.commander">
