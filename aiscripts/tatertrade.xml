@@ -667,7 +667,7 @@
                   <set_value name="$wareprice" exact="$foundbuyoffer.unitprice/100*$discount2/100" />
                 </do_if>
 
-                <debug_to_file name="this.ship.knownname" directory="'TaterTrader'" text="'   Scanning buy offer for ('+$foundbuyoffer.ware+') at ('+$foundbuyoffer.buyer.knownname+') Price: '+$wareprice+' Faction: '+$foundbuyoffer.buyer.owner+' Restriction: '+$foundbuyoffer.restriction.faction+' Raw OfferPrice: '+$foundbuyoffer.unitprice/100+' Relation: '+$foundbuyoffer.buyer.relationto.{this.ship.owner}+' Gate Distance: '+$home.gatedistance.{$foundbuyoffer.buyer}+' Distance Raw: '+$home.distanceto.{$foundbuyoffer.buyer}" output="false" append="true" />
+                <debug_to_file name="this.ship.knownname" directory="'TaterTrader'" text="'   Scanning buy offer for ('+$foundbuyoffer.ware+') at ('+$foundbuyoffer.buyer.knownname+') Price: '+$wareprice+' Amount: '+$foundbuyoffer.amount+' Faction: '+$foundbuyoffer.buyer.owner+' Restriction: '+$foundbuyoffer.restriction.faction+' Raw OfferPrice: '+$foundbuyoffer.unitprice/100+' Relation: '+$foundbuyoffer.buyer.relationto.{this.ship.owner}+' Gate Distance: '+$home.gatedistance.{$foundbuyoffer.buyer}+' Distance Raw: '+$home.distanceto.{$foundbuyoffer.buyer}" output="false" append="true" />
 
                 <do_if value="$wareprice gt $stationselloffer.unitprice/100"> <!-- Only consider the trade if they are paying more then the station is selling, we arnt a charity here. -->
                   <do_if value="$wareprice gt $bestprice"> <!-- Is it better then the previus best deal? -->
@@ -1196,7 +1196,7 @@
               <do_if value="$GrofferSell.seller == $home">
                 <do_if value="$GrofferSell.seller.owner == this.ship.owner">
                   <!-- Are We selling to a player station? -->
-                  <do_if value="not ($GrofferBuy.buyer.owner == this.ship.owner)">
+                  <do_if value="$GrofferBuy.buyer.owner == this.ship.owner">
                     <write_to_logbook category="general" title="'TaterTrader: '+this.ship.knownname+' ( '+this.ship.idcode+' )'" interaction="showonmap" object="this.ship" text="'Station Trader: Supplying '+$Gromount+' '+$GrofferSell.ware+' from '+$GrofferSell.seller.knownname+' to '+$GrofferBuy.buyer.knownname" />
                   </do_if>
                   <do_else>
